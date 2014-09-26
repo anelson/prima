@@ -94,8 +94,8 @@ class EtlStepProfile < EtlTestCase
 				source = SourceEtlStep.new(TestStringGenerator.new(ITERATION_COUNT))
 				t.add_step source
 
-				#transform = TransformEtlStep.new
-				#t.add_step transform
+				transform = TransformEtlStep.new
+				t.add_step transform
 
 				sink = NullStep.new
 				t.add_step sink
