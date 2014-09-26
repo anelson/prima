@@ -18,11 +18,11 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "upsert", "~> 2.0.3"
-  spec.add_runtime_dependency "msgpack", "~> 0.5.8"
-  spec.add_runtime_dependency "thread_safe", "~> 0.3.4"
-  spec.add_runtime_dependency "ruby-progressbar", "~> 1.5.1"
-  spec.add_runtime_dependency "activerecord", "~> 4.1.6"
+  spec.add_runtime_dependency "upsert", "~> 2.0", '>= 2.0.3'
+  spec.add_runtime_dependency "msgpack", "~> 0.5", '>= 0.5.8'
+  spec.add_runtime_dependency "thread_safe", "~> 0.3", '>= 0.3.4'
+  spec.add_runtime_dependency "ruby-progressbar", "~> 1.5", '>= 1.5.1'
+  spec.add_runtime_dependency "activerecord", "~> 4.1", '>= 4.1.6'
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
