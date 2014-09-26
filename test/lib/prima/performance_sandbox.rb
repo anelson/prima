@@ -1,6 +1,5 @@
 require 'test_helper'
 
-require 'eventmachine'
 require 'msgpack'
 
 class EventMachineExperimentTest < EtlTestCase
@@ -458,41 +457,5 @@ class EventMachineExperimentTest < EtlTestCase
 		end
 
 		puts "msgpack unpacker: #{SIZE / MB} MB/#{LINES} lines in #{time.real}.  #{SIZE / MB / time.real} MB/sec  #{LINES / time.real} lines/sec"
-	end
-
-	test "Can we use eventmachine with pipes to make it faster?" do
-		skip("doesn't work yet; reader is broken")
-		read, write = IO.pipe
-
-		time = Benchmark.measure do 
-			child_id = fork {
-				count = 0
-				write.close
-
-				EM.run do
-					fdmon = EM.watch(read, PipeClient)
-					fdmon.notify_readable = true
-				end
-
-				read.close
-			}
-
-			count = 0
-			read.close
-			LINES.times do 
-				write.puts LINE
-				count += 1
-				if count % 1000 == 0 
-					#puts "from parent: #{count} rows processed"
-				end
-			end
-			write.close
-
-			assert_equal LINES, count
-
-			Process.waitall
-		end
-
-		puts "Eventmachine: Read #{SIZE / MB} MB/#{LINES} lines in #{time.real}.  #{SIZE / MB / time.real} MB/sec  #{LINES / time.real} lines/sec"
 	end
 end
