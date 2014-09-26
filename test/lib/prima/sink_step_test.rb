@@ -6,7 +6,7 @@ class SinkStepTest < EtlTestCase
 	class TestSinkStep < SinkStep
 		attr_accessor :received_rows
 
-		def before_run
+		def before_run(step)
 			@received_rows = []
 		end
 

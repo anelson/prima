@@ -20,7 +20,7 @@ module Prima
 			@column_names = []
 		end
 
-		def before_run
+		def before_run(step)
 			if @header_row 
 				@column_names = []
 			end

@@ -1,5 +1,7 @@
 require 'test_helper'
 
+require 'stackprof'
+
 class DevNull
 	def close; nil; end
 	def puts(x); nil; end
@@ -64,45 +66,24 @@ class EtlStepBenchmark < EtlTestCase
 		end
 	end
 
-	test "benchmark raw throughput assuming no I/O" do
+	test "profile raw throughput assuming no I/O" do
 		times = ::Benchmark.measure do
-			t = Transformation.new
-			
-			source = SourceEtlStep.new(TestStringGenerator.new(ITERATION_COUNT))
-			t.add_step source
+			StackProf.run(mode: :cpu, out: 'tmp/no_io_transform.dump') do
+				t = Transformation.new
+				
+				source = SourceEtlStep.new(TestStringGenerator.new(ITERATION_COUNT))
+				t.add_step source
 
-			transform = TransformEtlStep.new
-			t.add_step transform
+				transform = TransformEtlStep.new
+				t.add_step transform
 
-			sink = NullStep.new
-			t.add_step sink
-			
-			t.run
-		end
-
-		puts "ETL source/sink with no I/O: #{ITERATION_COUNT} rows in #{times.real} seconds; #{ITERATION_COUNT / times.real} rows/sec"
-
-		if defined?(Rodimus)
-			times = ::Benchmark.measure do
-				# Make a transform with three steps, the first one hooked up to an object generator,
-				# the last one writing out to nothing, and the one in between just outputting the object it's given
-				t = Rodimus::Transformation.new
-
-				source = Rodimus::Step.new
-				source.incoming = TestStringGenerator.new(ITERATION_COUNT)
-				t.steps << source
-
-				transform = Rodimus::Step.new
-				t.steps << transform
-
-				sink = Rodimus::Step.new
-				sink.outgoing = DevNull.new
-				t.steps << sink
+				sink = NullStep.new
+				t.add_step sink
 				
 				t.run
 			end
-
-			puts "Rodiumus source/sink with no I/O: #{ITERATION_COUNT} rows in #{times.real} seconds; #{ITERATION_COUNT / times.real} rows/sec"
 		end
+
+		puts "ETL source/sink with no I/O: #{ITERATION_COUNT} rows in #{times.real} seconds; #{ITERATION_COUNT / times.real} rows/sec"
 	end
 end

@@ -19,6 +19,12 @@ class EtlTestCase < ActiveSupport::TestCase
 		rescue ActiveRecord::ConnectionNotEstablished
 			# This is fine if ActiveRecord isn't in use
 		end
+
+		# Quiet the logger
+		Prima.configure do |config|
+			config.logger.level = Logger::WARN
+			config.benchmarking = true
+		end
   end
 
 	#Runs a source step, assuming the step has its own input.  Takes msgpack-serialized output objects

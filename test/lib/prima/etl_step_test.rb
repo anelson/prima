@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EtlStepTest < EtlTestCase
 	class GenerateNumbersStep < Prima::SourceStep
-		def before_run
+		def before_run(step)
 			@incoming = (0..100).to_a
 		end
 
@@ -12,7 +12,7 @@ class EtlStepTest < EtlTestCase
 	end
 
 	class SumNumbersStep < Prima::SinkStep
-		def before_run
+		def before_run(step)
 			self.shared_sum = 0
 		end
 

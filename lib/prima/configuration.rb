@@ -12,8 +12,11 @@ module Prima
     # Automatically set to true for JRuby and Rubinius
     attr_accessor :use_threads
 
+    attr_accessor :progname
+
     def initialize
       @logger = Logger.new(STDOUT)
+      @progname = 'prima'
       @benchmarking = false
       @use_threads = ['jruby', 'rbx'].include?(RUBY_ENGINE)
     end

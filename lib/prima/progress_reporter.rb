@@ -1,14 +1,13 @@
-require 'rodimus'
 require 'ruby-progressbar'
 
 module Prima
 	class ProgressReporter
-		include Rodimus::Observing
+		include Subscriber
 
 		def self.attach(step)
 			me = ProgressReporter.new(step)
 
-			step.observers << me
+			step.subscribe << me
 
 			me
 		end

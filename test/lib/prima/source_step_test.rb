@@ -12,7 +12,7 @@ class SourceStepTest < EtlTestCase
 			@input_rows = []
 		end
 
-		def before_run
+		def before_run(step)
 			@incoming = input_rows
 		end
 

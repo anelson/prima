@@ -12,6 +12,11 @@ Rake::TestTask.new('test:benchmark') do |t|
   t.pattern = 'test/**/*_benchmark.rb'
 end
 
+Rake::TestTask.new('test:profile') do |t|
+  t.libs << 'test'
+  t.pattern = 'test/**/*_profile.rb'
+end
+
 Rake::TestTask.new('test:sandbox') do |t|
   t.libs << 'test'
   t.pattern = 'test/**/*_sandbox.rb'

@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'benchmark'
 
 class TransformBenchmark < EtlTestCase
 	PARCEL_FILE = "parcel_test.csv"
@@ -7,7 +8,7 @@ class TransformBenchmark < EtlTestCase
 
 	#self.use_transactional_fixtures = true
 
-	class RowCounterStep < SinkStep
+	class RowCounterStep < Prima::SinkStep
 		def before_run
 			self.shared_count = 0
 		end
@@ -26,16 +27,9 @@ class TransformBenchmark < EtlTestCase
 		File.dirname(__FILE__) + '/testdata/' + filename
 	end
 
-	def setup
-		Rodimus.configure do |config|
-			config.logger = Rails.logger
-			config.benchmarking = true
-		end
-	end
-
 	test "measure transform performance" do
 		skip("too slow")
-		Benchmark.benchmark("transform performance: ", 15, Benchmark::FORMAT) do |b|
+		::Benchmark.benchmark("transform performance: ", 15, Benchmark::FORMAT) do |b|
 			times = []
 
 			times << run_transform(b, 'load all new: ') {

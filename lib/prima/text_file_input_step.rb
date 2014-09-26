@@ -13,7 +13,7 @@ module Prima
 			@file_options = file_options
 		end
 
-		def before_run_open_file
+		def before_run_open_file(step)
 			Prima.logger.info "opening text file #{file_path}"
 
 			@incoming = File.open(file_path, mode: 'r', opt: @file_options)

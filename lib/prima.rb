@@ -4,8 +4,11 @@ require 'prima/configuration'
 require 'prima/publisher'
 require 'prima/subscriber'
 
+require 'prima/benchmark'
+
 require 'prima/transformation'
 
+require 'prima/step'
 require 'prima/etl_step'
 require 'prima/missing_msgpack_types'
 require 'prima/msgpack_step'
