@@ -3,28 +3,6 @@ require 'test_helper'
 require 'msgpack'
 
 class EventMachineExperimentTest < EtlTestCase
-	class PipeClient < EventMachine::FileWatch
-		def initialize
-			@count = 0
-		end
-
-		def count; @count; end
-
-		def notify_readable
-			@io.readlines.each do |line|
-				assert_equal LINE, line.rstrip
-				@count += 1
-			end
-		end
-
-	  def unbind
-	    puts "#{path} monitoring ceased"
-	    EM.stop
-
-	    assert_equal LINES, @count
-	  end
-	end
-
 	MB = 1024.0 * 1024.0
 	LINES = 800000
 	LINE = %q{"0101000000020","01","16 SE 2ND STREET LLC","","","16 SE 2ND STREET LLC","","505 PARK AVE #18 FL","NEW YORK","NY","10022","USA","16 SE 2 ST","16","SE","2","","ST","","","Miami","33131-2103","2865","6401","0.00","60198.00","1.3820","0","0.00","0","0","0","0","0","0","0101","2014","15049500","0","6789","15056289","0","0","0","0","0","0","0","0","0","0","15056289","0","15056289","0","15056289","0","15056289","0","15056289","2013","5718810","0","6789","5725599","0","0","0","0","0","0","0","0","0","0","5725599","0","5725599","0","5725599","0","5725599","0","5725599","2012","5718810","0","8764","5727574","0","0","0","0","0","0","0","0","0","0","5727574","0","5727574","0","5727574","0","5727574","0","5727574"}
