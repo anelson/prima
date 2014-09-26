@@ -3,7 +3,7 @@ require 'test_helper'
 require 'msgpack'
 
 class SourceStepTest < EtlTestCase
-	class TestSourceStep < SourceStep
+	class TestSourceStep < Prima::SourceStep
 		attr_accessor :input_rows
 
 		def initialize

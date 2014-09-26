@@ -35,7 +35,7 @@ class CsvParserStepTest < EtlTestCase
 	]
 
 	test "parses comma separated values without headers" do
-		step = CsvParserStep.new(header_row: false)
+		step = Prima::CsvParserStep.new(header_row: false)
 		input = COMMA_SEPARATED_NO_HEADERS
 
 		output = run_transform_step(input, step)
@@ -44,7 +44,7 @@ class CsvParserStepTest < EtlTestCase
 	end
 
 	test "parses comma separated values with headers" do
-		step = CsvParserStep.new(header_row: true)
+		step = Prima::CsvParserStep.new(header_row: true)
 		input = COMMA_SEPARATED_WITH_HEADERS
 
 		output = run_transform_step(input, step)

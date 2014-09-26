@@ -16,7 +16,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "produces empty row if no mappings defined" do
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 		end
 
 		output = run_transform_step(@hash_input, step)
@@ -28,7 +28,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "maps values by ordinal" do
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 			m.map_ordinal 0, 'name'
 			m.map_ordinal 1, 'age'
 			m.map_ordinal 2, 'id'
@@ -40,7 +40,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "maps values by array of labels" do
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 			m.map_ordinal_by_array ['name', 'age', 'id']
 		end
 
@@ -50,7 +50,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "maps values by name" do
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 			m.map_name 'name', 'designation'
 			m.map_ordinal 'age', 'runtime'
 		end
@@ -65,7 +65,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "maps values by a user defined hash" do
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 			m.map Hash[{
 				'name' => 'designation',
 				'age' => 'runtime'
@@ -82,7 +82,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "maps values with custom block" do
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 			m.map_custom do |row|
 				{ 'whatever' => row['age'] }
 			end
@@ -98,7 +98,7 @@ class MapperStepTest < EtlTestCase
 	end
 
 	test "fails if an input does not exist" do 
-		step = MapperStep.define_mappings do |m|
+		step = Prima::MapperStep.define_mappings do |m|
 			m.map_name 'name', 'designation'
 			m.map_ordinal 'salary', 'runtime'
 		end

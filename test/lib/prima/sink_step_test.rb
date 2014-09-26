@@ -3,7 +3,7 @@ require 'test_helper'
 require 'msgpack'
 
 class SinkStepTest < EtlTestCase
-	class TestSinkStep < SinkStep
+	class TestSinkStep < Prima::SinkStep
 		attr_accessor :received_rows
 
 		def before_run(step)

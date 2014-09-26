@@ -1,6 +1,6 @@
 require_relative '../../test_helper'
 
-class VersionTest < MiniTest::Unit::TestCase
+class VersionTest < MiniTest::Test
 	def test_version_defined
 		refute_nil Prima::VERSION
 	end

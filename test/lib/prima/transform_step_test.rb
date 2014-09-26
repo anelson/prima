@@ -3,7 +3,7 @@ require 'test_helper'
 require 'msgpack'
 
 class TransformStepTest < EtlTestCase
-	class TestTransformStep < TransformStep
+	class TestTransformStep < Prima::TransformStep
 		def process_row(row)
 			if row != nil
 				{"processed" => true, "row" => row}

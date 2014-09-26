@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RegexFilterStepTest < EtlTestCase
 	test "passes all objects if the regex matches everything" do
-		step = RegexFilterStep.new /.*/
+		step = Prima::RegexFilterStep.new /.*/
 		input = [
 			{ 'data' => 'blah' },
 			{ 'data' => 'foo' },
@@ -15,7 +15,7 @@ class RegexFilterStepTest < EtlTestCase
 	end
 
 	test "passes no objects if the regex matces nothing" do
-		step = RegexFilterStep.new /[0-9]+/
+		step = Prima::RegexFilterStep.new /[0-9]+/
 		input = [
 			{ 'data' => 'blah' },
 			{ 'data' => 'foo' },
@@ -28,7 +28,7 @@ class RegexFilterStepTest < EtlTestCase
 	end
 
 	test "passes some objects if the filter function is picky" do
-		step = RegexFilterStep.new /ee/
+		step = Prima::RegexFilterStep.new /ee/
 		input = [
 			{ 'data' => 'blah' },
 			{ 'data' => 'foo' },
@@ -44,7 +44,7 @@ class RegexFilterStepTest < EtlTestCase
 	end
 
 	test "replace input with capture group if present" do 
-		step = RegexFilterStep.new /^\"(.+)\"$/
+		step = Prima::RegexFilterStep.new /^\"(.+)\"$/
 		input = [
 			{ "line" => 1, "data" => %q{"1","dick","blue"} },
 			{ "line" => 2, "data" => %q{"2","bob","green"} },
@@ -60,7 +60,7 @@ class RegexFilterStepTest < EtlTestCase
 	end
 
 	test "replace input with named values if named capture groups are used" do 
-		step = RegexFilterStep.new /(?<num1>\d):(?<num2>\d):(?<num3>\d)/
+		step = Prima::RegexFilterStep.new /(?<num1>\d):(?<num2>\d):(?<num3>\d)/
 		input = [
 			{ 'line' => 1, 'data' => '1:2:3' },
 			{ 'line' => 2, 'data' => 'foo' },

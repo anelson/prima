@@ -32,7 +32,7 @@ class EtlStepTest < EtlTestCase
 	end
 
 	test "shared data is passed between transform and running steps" do
-		t = Transformation.new
+		t = Prima::Transformation.new
 
 		t.shared_data['foo'] = 'lame'
 

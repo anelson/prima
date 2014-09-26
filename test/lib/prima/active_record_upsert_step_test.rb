@@ -11,7 +11,7 @@ class ActiveRecordUpsertStepTest < EtlTestCase
 			{ 'data' => existing_record.attributes.select { |k,v| k != 'id' && k != 'created_at' && k != 'updated_at' } }
 		]
 
-		step = ActiveRecordUpsertStep.new(Parcel, ['folio'])
+		step = Prima::ActiveRecordUpsertStep.new(Parcel, ['folio'])
 
 		run_sink_step(input, step)
 
@@ -32,7 +32,7 @@ class ActiveRecordUpsertStepTest < EtlTestCase
 
 		input[0]['data']['owner1'] = "new owner"
 
-		step = ActiveRecordUpsertStep.new(Parcel, ['folio'])
+		step = Prima::ActiveRecordUpsertStep.new(Parcel, ['folio'])
 
 		run_sink_step(input, step)
 
@@ -56,7 +56,7 @@ class ActiveRecordUpsertStepTest < EtlTestCase
 
 		input[0]['data']['owner1'] = "new owner"
 
-		step = ActiveRecordUpsertStep.new(Parcel, ['folio'])
+		step = Prima::ActiveRecordUpsertStep.new(Parcel, ['folio'])
 
 		run_sink_step(input, step)
 

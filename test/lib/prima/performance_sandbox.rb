@@ -3,7 +3,6 @@ require 'test_helper'
 require 'eventmachine'
 require 'msgpack'
 
-if false
 class EventMachineExperimentTest < EtlTestCase
 	class PipeClient < EventMachine::FileWatch
 		def initialize
@@ -43,6 +42,7 @@ class EventMachineExperimentTest < EtlTestCase
 	test "how fast is Ruby native IO reads" do
 		#path = get_test_data_file_path('parcel_test.csv')
 		path = get_test_data_file_path('../../../rawdata/PublicParcelExtract.csv')
+		skip("#{path} not found") unless File.exist?(path)
 
 		File.open(path, 'r') do |file|
 			size = File.size(file)
@@ -349,7 +349,7 @@ class EventMachineExperimentTest < EtlTestCase
 				objects = 0
 				write.close
 
-				reader = MsgpackIoReader.new read
+				reader = Prima::MsgpackIoReader.new read
 				reader.each do |obj|
 					#puts "obj: #{obj}"
 					assert_equal LINE, obj["line"]
@@ -365,7 +365,7 @@ class EventMachineExperimentTest < EtlTestCase
 			count = 0
 			read.close
 			obj = { :line => nil }
-			writer = MsgpackIoWriter.new write
+			writer = Prima::MsgpackIoWriter.new write
 			LINES.times do 
 				obj[:line] = LINE
 
@@ -396,7 +396,7 @@ class EventMachineExperimentTest < EtlTestCase
 					objects = 0
 					write.close
 
-					step = NullStep.new
+					step = Prima::NullStep.new
 					step.incoming = read
 
 					step.run
@@ -414,7 +414,7 @@ class EventMachineExperimentTest < EtlTestCase
 			count = 0
 			read.close
 			obj = { :line => nil }
-			writer = MsgpackIoWriter.new write
+			writer = Prima::MsgpackIoWriter.new write
 			LINES.times do 
 				obj[:line] = LINE
 
@@ -496,5 +496,3 @@ class EventMachineExperimentTest < EtlTestCase
 		puts "Eventmachine: Read #{SIZE / MB} MB/#{LINES} lines in #{time.real}.  #{SIZE / MB / time.real} MB/sec  #{LINES / time.real} lines/sec"
 	end
 end
-
-end #end if false

@@ -37,7 +37,7 @@ class TransformBenchmark < EtlTestCase
 
 				assert_equal 0, Parcel.count(:all)
 
-				t = Transformation.new
+				t = Prima::Transformation.new
 
 				input = input_step
 				t.add_step input
@@ -61,7 +61,7 @@ class TransformBenchmark < EtlTestCase
 			}
 
 			times << run_transform(b, 'just reading: ') {
-				t = Transformation.new
+				t = Prima::Transformation.new
 
 				input = input_step
 				t.add_step input
@@ -75,7 +75,7 @@ class TransformBenchmark < EtlTestCase
 			} 
 
 			times << run_transform(b, 'read and parse: ') {
-				t = Transformation.new
+				t = Prima::Transformation.new
 
 				input = input_step
 				t.add_step input
@@ -96,7 +96,7 @@ class TransformBenchmark < EtlTestCase
 			}
 
 			times << run_transform(b, 'read and map: ') {
-				t = Transformation.new
+				t = Prima::Transformation.new
 
 				input = input_step
 				t.add_step input
@@ -134,20 +134,20 @@ class TransformBenchmark < EtlTestCase
 	end
 
 	def input_step
-		TextFileInputStep.new(get_test_data_file_path(PARCEL_FILE))
+		Prima::TextFileInputStep.new(get_test_data_file_path(PARCEL_FILE))
 	end
 
 	def filter_step
 		# Strip leading and trailing " character as the prelude to parsing out the CSV
-		filter = RegexFilterStep.new(/^\"(.+)\"$/)	
+		filter = Prima::RegexFilterStep.new(/^\"(.+)\"$/)	
 	end
 
 	def csv_step
-		csv = CsvParserStep.new(header_row: false, options: { :quote_char => "\x00", :col_sep => "\",\"" })
+		csv = Prima::CsvParserStep.new(header_row: false, options: { :quote_char => "\x00", :col_sep => "\",\"" })
 	end
 
 	def mapper_step
-		MapperStep.define_mappings do |m|
+		Prima::MapperStep.define_mappings do |m|
 			m.map_ordinal_by_array [
 				'folio',
 				'municipality',

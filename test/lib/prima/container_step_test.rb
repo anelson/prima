@@ -35,7 +35,7 @@ class ContainerStepTest < EtlTestCase
 	end
 
 	test "produces input at output if there are no steps" do
-		step = ContainerStep.new([])
+		step = Prima::ContainerStep.new([])
 		input = @input
 
 		output = run_transform_step(input, step)
@@ -44,7 +44,7 @@ class ContainerStepTest < EtlTestCase
 	end
 
 	test "calls all of the steps correctly" do
-		step = ContainerStep.new(@steps)
+		step = Prima::ContainerStep.new(@steps)
 		input = @input
 
 		output = run_transform_step(input, step)
