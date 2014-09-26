@@ -34,7 +34,20 @@ class TestObjectGenerator < DummyIOGenerator
 	end
 end
 
+module StepProfiler
+	def run
+		file = "tmp/step_#{self.class.name}.dump"
+		StackProf.run(mode: :cpu, out: file) do
+			super
+		end
+
+		puts "Profiled step at #{file}"
+	end
+end
+
 class SourceEtlStep < Prima::SourceStep
+	include StepProfiler
+
 	def initialize(input)
 		super()
 
@@ -48,12 +61,18 @@ end
 
 # A step that does some nominal processing on an object, returning a different object as a result
 class TransformEtlStep < Prima::TransformStep
+	include StepProfiler
+	
 	def process_row(x) 
 		{ :processed => true, :row => x}
 	end
 end
 
-class EtlStepBenchmark < EtlTestCase
+class NullStep < Prima::NullStep
+	include StepProfiler	
+end
+
+class EtlStepProfile < EtlTestCase
 	ITERATION_COUNT = 1000000
 
 	def setup
@@ -68,20 +87,23 @@ class EtlStepBenchmark < EtlTestCase
 
 	test "profile raw throughput assuming no I/O" do
 		times = ::Benchmark.measure do
-			StackProf.run(mode: :cpu, out: 'tmp/no_io_transform.dump') do
-				t = Transformation.new
+			file = 'tmp/transformation_no_io_transform.dump'
+			StackProf.run(mode: :cpu, out: file) do
+				t = Prima::Transformation.new
 				
 				source = SourceEtlStep.new(TestStringGenerator.new(ITERATION_COUNT))
 				t.add_step source
 
-				transform = TransformEtlStep.new
-				t.add_step transform
+				#transform = TransformEtlStep.new
+				#t.add_step transform
 
 				sink = NullStep.new
 				t.add_step sink
 				
 				t.run
 			end
+
+			puts "Profiled parent process at #{file}"
 		end
 
 		puts "ETL source/sink with no I/O: #{ITERATION_COUNT} rows in #{times.real} seconds; #{ITERATION_COUNT / times.real} rows/sec"

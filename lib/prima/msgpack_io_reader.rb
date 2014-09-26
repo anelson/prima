@@ -4,6 +4,7 @@ module Prima
 	# Wraps an IO object just enoguh to fool Rodimus into treating it as an incoming stream, 
 	# while doing high performance direct OS calls under the covers and serializing input from msgpack
 	class MsgpackIoReader
+		attr_reader :io
 		BUFFER_SIZE = 65536
 
 		def initialize(io)

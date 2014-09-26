@@ -1,6 +1,4 @@
 class EtlTestCase < ActiveSupport::TestCase
-	include Prima
-	
 	def get_test_data_file_path(filename)
 		File.dirname(__FILE__) + '/testdata/' + filename
 	end
