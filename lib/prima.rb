@@ -1,6 +1,9 @@
 require 'prima/version'
 require 'prima/configuration'
 
+require 'prima/publisher'
+require 'prima/subscriber'
+
 require 'prima/transformation'
 
 require 'prima/etl_step'

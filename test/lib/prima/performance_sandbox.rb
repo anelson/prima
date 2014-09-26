@@ -3,6 +3,7 @@ require 'test_helper'
 require 'eventmachine'
 require 'msgpack'
 
+if false
 class EventMachineExperimentTest < EtlTestCase
 	class PipeClient < EventMachine::FileWatch
 		def initialize
@@ -495,3 +496,5 @@ class EventMachineExperimentTest < EtlTestCase
 		puts "Eventmachine: Read #{SIZE / MB} MB/#{LINES} lines in #{time.real}.  #{SIZE / MB / time.real} MB/sec  #{LINES / time.real} lines/sec"
 	end
 end
+
+end #end if false
