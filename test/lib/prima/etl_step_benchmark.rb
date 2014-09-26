@@ -66,7 +66,7 @@ class EtlStepBenchmark < EtlTestCase
 
 	test "benchmark raw throughput assuming no I/O" do
 		times = ::Benchmark.measure do
-			t = Transformation.new
+			t = Prima::Transformation.new
 			
 			source = SourceEtlStep.new(TestStringGenerator.new(ITERATION_COUNT))
 			t.add_step source
@@ -74,7 +74,7 @@ class EtlStepBenchmark < EtlTestCase
 			transform = TransformEtlStep.new
 			t.add_step transform
 
-			sink = NullStep.new
+			sink = Prima::NullStep.new
 			t.add_step sink
 			
 			t.run
