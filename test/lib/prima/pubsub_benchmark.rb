@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'benchmark'
 
-ITERATION_COUNT = 10000000
+ITERATION_COUNT = 1000000
 
 class MyPublisher
 	include Prima::Publisher

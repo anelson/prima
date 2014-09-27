@@ -29,6 +29,7 @@ require 'prima/regex_filter_step'
 require 'prima/text_file_input_step'
 
 require 'prima/progress_reporter'
+require 'prima/step_profiler'
 
 module Prima
   class << self

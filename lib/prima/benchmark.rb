@@ -10,12 +10,18 @@ module Prima
       case event_type
       when :before_run
         initialize_stats
+        true
       when :after_run
         finalize_stats(args[0])
+        true
       when :before_row
         before_row
+        true
       when :after_row
         after_row
+        true
+      else 
+      	false
       end
     end
 

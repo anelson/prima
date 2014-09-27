@@ -54,7 +54,6 @@ end
 
 class EtlStepBenchmark < EtlTestCase
 	ITERATION_COUNT = 1000000
-
 	def setup
 		super
 
